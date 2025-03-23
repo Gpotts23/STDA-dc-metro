@@ -65,26 +65,19 @@ boardings <- boardings %>%
 boardings_cleaned <- boardings
 
 #-------------------------------------------------------------------------------
-# Initial Map of Metro Stations
+# Initial Map of Metro Stations (No Basemap)
 
-# Define bounding box
-dc_bbox <- c(left = -77.50, bottom = 38.70, right = -76.80, top = 39.15)
-
-# ENTER YOUR PERSONAL STADIA MAPS API KEY
-register_stadiamaps(key = "<INSERT YOUR STADIA MAPS API KEY HERE")
-
-# Get basemap
-dc_basemap <- get_stadiamap(bbox = dc_bbox, zoom = 11, maptype = "stamen_toner_lite")
-
-# Plot stations
-station_map <- ggmap(dc_basemap) +
-  geom_point(data = boardings_cleaned %>% distinct(StationName, Lat, Lon), 
-             aes(x = Lon, y = Lat), color = "red3", size = 3, alpha = 0.7) +
+# Plot stations without basemap
+station_map <- ggplot(boardings_cleaned %>% distinct(StationName, Lat, Lon), 
+                      aes(x = Lon, y = Lat)) +
+  geom_point(color = "red3", size = 3, alpha = 0.7) +
   labs(title = "DC Metro Network Stations After Initial Data Preparation", 
        x = "Longitude", y = "Latitude") +
+  coord_fixed() + 
   theme_minimal()
 
 print(station_map)
+
 
 #-------------------------------------------------------------------------------
 # Plot of initial temporal trends
