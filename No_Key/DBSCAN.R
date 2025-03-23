@@ -92,33 +92,24 @@ cluster_labels <- c(
 )
 
 #-------------------------------------------------------------------------------
-#Plot DBSCAN cluster map
-
-# Define bounding box
-dc_bbox <- c(left = -77.50, bottom = 38.70, right = -76.80, top = 39.15)
-
-# ENTER YOUR PERSONAL STADIA MAPS API KEY
-register_stadiamaps(key = "<INSERT YOUR STADIA MAPS API KEY HERE")
-
-# Get basemap
-dc_basemap <- get_stadiamap(bbox = dc_bbox, zoom = 11, maptype = "stamen_toner_lite")
+# Plot DBSCAN cluster map (No Basemap)
 
 # Plot most frequent cluster per station
 plot_stdbscan_clusters <- function(data, title) {
-  ggmap(dc_basemap) +
-    geom_point(data = data, aes(x = Lon, y = Lat, color = factor(ST_DBSCAN_Cluster)), size = 3) +
-    scale_color_manual(values = cluster_colors, labels = cluster_labels, drop = FALSE) +  
-    labs(title = title, color = "Cluster") +
+  ggplot(data, aes(x = Lon, y = Lat, color = factor(ST_DBSCAN_Cluster))) +
+    geom_point(size = 3) +
+    scale_color_manual(values = cluster_colors, labels = cluster_labels, drop = FALSE) +
+    labs(title = title, x = "Longitude", y = "Latitude", color = "Cluster") +
     theme_minimal() +
     theme(legend.position = "bottom")
 }
-avg_stdbscan_map <- plot_stdbscan_clusters(boardings_avg_stdbscan, "Most Frequent DBSCAN Cluster per Station in 2024")
 
-#Convert NA clusters to noise (0)
+# Convert NA clusters to noise (0)
 boardings_avg_stdbscan$ST_DBSCAN_Cluster[is.na(boardings_avg_stdbscan$ST_DBSCAN_Cluster)] <- 0
 boardings_avg_stdbscan$ST_DBSCAN_Cluster <- factor(boardings_avg_stdbscan$ST_DBSCAN_Cluster, levels = c(0, 1, 2, 3, 4))
 
-#Print map
+# Generate & print the map
+avg_stdbscan_map <- plot_stdbscan_clusters(boardings_avg_stdbscan, "Most Frequent DBSCAN Cluster per Station in 2024")
 print(avg_stdbscan_map)
 
 #-------------------------------------------------------------------------------
