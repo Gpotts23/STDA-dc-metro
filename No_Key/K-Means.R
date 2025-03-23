@@ -84,27 +84,25 @@ ggplot(boardings_long, aes(x = Date, y = Boardings, group = StationName, color =
   theme(legend.position = "bottom")
 
 #-------------------------------------------------------------------------------
-# Plotting the stations, symbolized into their cluster
+# Plotting the stations, symbolized into their cluster (No basemap)
 
 # Define bounding box
 dc_bbox <- c(left = -77.50, bottom = 38.70, right = -76.80, top = 39.15)
 
-# ENTER YOUR PERSONAL STADIA MAPS API KEY
-register_stadiamaps(key = "<INSERT YOUR STADIA MAPS API KEY HERE")
-
-# Get basemap
-dc_basemap <- get_stadiamap(bbox = dc_bbox, zoom = 11, maptype = "stamen_toner_lite")
-
-# Plot stations
+# Plot function (no basemap)
 plot_metro_avg_clusters <- function(data, title) {
-  ggmap(dc_basemap) +
-    geom_point(data = data, aes(x = Lon, y = Lat, color = factor(Cluster)), size = 3) +
+  ggplot(data, aes(x = Lon, y = Lat, color = factor(Cluster))) +
+    geom_point(size = 3) +
     scale_color_manual(values = cluster_colors) +
-    labs(title = title, color = "Cluster") +
+    labs(title = title, color = "Cluster", x = "Longitude", y = "Latitude") +
+    coord_cartesian(xlim = c(dc_bbox["left"], dc_bbox["right"]),
+                    ylim = c(dc_bbox["bottom"], dc_bbox["top"])) +
     theme_minimal() +
     theme(legend.position = "bottom")
 }
 
+# Print map
 avg_cluster_map <- plot_metro_avg_clusters(boardings_clustered, "K-means Assigned Station Clusters in 2024")
 print(avg_cluster_map)
+
 
