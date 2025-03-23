@@ -1,6 +1,6 @@
 #K-Means
 #This file contains script for running the spatial-temporal clustering method, k-means
-#DataPrep.R MUST be ran before this script.
+#DataPrep_Stadia.R MUST be ran before this script.
 
 #-------------------------------------------------------------------------------
 # Load libraries
