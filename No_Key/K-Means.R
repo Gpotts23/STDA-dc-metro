@@ -3,6 +3,9 @@
 #DataPrep.R MUST be ran before this script.
 
 #-------------------------------------------------------------------------------
+#Install packages (if necessary)
+install.packages(c("dplyr", "tidyr", "ggplot2", "ggmap"))
+
 # Load libraries
 library(dplyr)
 library(tidyr)

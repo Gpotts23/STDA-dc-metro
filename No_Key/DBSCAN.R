@@ -3,6 +3,9 @@
 #DataPrep.R MUST be ran before this script.
 
 #-------------------------------------------------------------------------------
+#Install packages (if necessary)
+install.packages(c("dbscan", "dplyr", "ggplot2", "ggmap", "tidyr"))
+
 # Load libraries
 library(dbscan)
 library(dplyr)
