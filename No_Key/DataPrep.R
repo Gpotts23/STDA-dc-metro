@@ -2,6 +2,9 @@
 #This file contains script for initial import, cleaning, and analysis plots of the DC boardings data in 2024
 
 #-------------------------------------------------------------------------------
+#Install packages (if necessary)
+install.packages(c("dplyr", "ggplot2", "sf", "spdep", "ggrepel", "metro", "ggmap"))
+
 # Load Libraries
 library(dplyr)
 library(ggplot2)
